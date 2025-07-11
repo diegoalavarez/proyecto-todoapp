@@ -5,10 +5,11 @@ const userSchema = new mongoose.Schema({
     name: String, // Almacena el nombre del usuario
     email: String, // Almacena el correo electrónico del usuario
     passwordHash: String, // Almacena el hash de la contraseña
-    verified: { 
+    verified: { // Indica si el usuario ha verificado su cuenta
     type: Boolean,
     default: false
-     }, // Indica si el usuario ha verificado su cuenta
+     }, 
+    
     todos: [{
         type: mongoose.Schema.Types.ObjectId, // Almacena el ID del usuario que creó el todo
         ref: 'Todo' // Referencia al modelo Todo

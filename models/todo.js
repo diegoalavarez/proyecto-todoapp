@@ -2,8 +2,8 @@ const mongoose = require('mongoose'); // Importa mongoose para interactuar con M
 
 // Define el esquema del modelo de usuario
 const todoSchema = new mongoose.Schema({ 
-    texto: String, // Almacena el nombre del usuario
-    checked: Boolean, // Falta la coma aquí
+    texto: String, // Almacena el texto del todo
+    checked: Boolean, // Almacena el estado del todo (completado o no)
     user: {
         type: mongoose.Schema.Types.ObjectId, // Almacena el ID del usuario que creó el todo
         ref: 'User' // Referencia al modelo User
