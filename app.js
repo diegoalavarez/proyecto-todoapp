@@ -37,7 +37,8 @@ app.use('/components', express.static(path.resolve('views', 'components')));
 app.use('/images', express.static(path.resolve('img')));
 app.use('/verify/:id/:token', express.static(path.resolve('views', 'verify')));
 
-
+//MORGAN
+// Morgan es un middleware que permite registrar las peticiones HTTP en la consola
 app.use(morgan('tiny'));
 
 //Rutas Backend
