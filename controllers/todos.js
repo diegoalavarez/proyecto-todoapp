@@ -2,7 +2,7 @@ const todosRouter = require('express').Router();
 const User = require('../models/user');
 const Todo = require('../models/todo');
 const {userExtractor} = require('../middleware/auth'); // Middleware para extraer el usuario autenticado}
-const { response } = require('../app');
+const { res } = require('../app');
 
 // /todosRouter.use(userExtractor); // Aplicar el middleware para todas las rutas de este router
 
