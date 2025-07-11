@@ -10,9 +10,9 @@ todosRouter.get('/', async (request, response) => {
 
 todosRouter.post('/', async (request, response) => {
     const user = request.user;
-    const { text } = request.body;
+    const { texto } = request.body;
     const newTodo = new Todo({
-        text,
+        texto,
         checked: false,
         user: user._id
     });
