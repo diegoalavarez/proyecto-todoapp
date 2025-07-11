@@ -1,45 +1,38 @@
 const loginRouter = require('express').Router();
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
-const response  = require('express');
 const jwt = require('jsonwebtoken');
 
-loginRouter.post('/' , async (request, response) => {
-    const { email, password } = request.body;
+
+
+loginRouter.post('/', async (req, res) => {
+    const { email, password } = req.body;
     const userExist = await User.findOne({ email });
-    // console.log(email, password);
-    
+
     if (!userExist) {
-        return response.status(400).json({ error: 'Email o contraseña incorrectos' });
+        return res.status(400).json({ error: 'Email o contraseña incorrectos' });
     }
 
-    if(!userExist.verified) {
-        return response.status(400).json({ error: 'Email no verificado' });
+    if (!userExist.verified) {
+        return res.status(400).json({ error: 'Email no verificado' });
     }
 
-    const isCorrect = await bcrypt.compare(password, userExist.passwordHash); //repasar
-    
+    const isCorrect = await bcrypt.compare(password, userExist.passwordHash);
+
     if (!isCorrect) {
-        return response.status(400).json({ error: 'Email o contraseña incorrectos' });
+        return res.status(400).json({ error: 'Email o contraseña incorrectos' });
     }
 
-const userForToken = {
-    id: userExist.id,
-}
+    const userForToken = { id: userExist.id };
+    const accessToken = jwt.sign(userForToken, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' });
 
-const accessToken = jwt.sign(userForToken, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: '1d'
-});
+    res.cookie('accessToken', accessToken, {
+        expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 1),
+        secure: process.env.NODE_ENV === 'production',
+        httpOnly: true
+    });
 
-response.cookie('accessToken', accessToken, {
-    expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 1), // 1 day in milliseconds
-    secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
-    httpOnly: true // Prevents client-side JavaScript from accessing the cookie
-    
-});
-
-return response.sendStatus(200);
-
+    return res.sendStatus(200);
 });
 
 module.exports = loginRouter; 

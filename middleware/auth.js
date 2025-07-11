@@ -1,27 +1,24 @@
-const { request } = require('express');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
-const userExtractor = async (request, response, next) => { 
-    const token = (request.cookies?.accessToken);
 
-    try {
+
+const userExtractor = async (req, res, next) => {
+    const token = req.cookies.accessToken;
     if (!token) {
-        return response.sendStatus(401);
+        return res.status(401).json({ error: 'Token faltante' });
     }
-
-    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-    console.log(decoded);
-    const user = await User.findById(decoded.id);
-    // console.log(user);
-    request.user = user; // Attach the user to the request object
+    try {
+        const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+        const user = await User.findById(decoded.id);
+        if (!user) {
+            return res.status(401).json({ error: 'Usuario no encontrado' });
+        }
+        req.user = user;
+        next();
+    } catch (error) {
+        return res.status(401).json({ error: 'Token inválido' });
     }
-    
-    catch (error) {
-        // console.log(error);
-    return response.sendStatus(403); // Forbidden if token is invalid
-    }
-    next();
 };
 
 

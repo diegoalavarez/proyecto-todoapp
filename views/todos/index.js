@@ -46,8 +46,8 @@ form.addEventListener('submit', async e => {
 	invalidCheck.classList.add('hidden');
 
 	// Create list item
-const { data } = await axios.post('/api/todos', { texto: input.value });
-//console.log(data);
+	const { data } = await axios.post('/api/todos', { text: input.value });
+	console.log(data);
 
 	const listItem = document.createElement('li');
 	listItem.id = data.id; // Assuming the response contains an id for the todo
