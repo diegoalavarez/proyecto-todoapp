@@ -1,10 +1,6 @@
 const todosRouter = require('express').Router();
 const User = require('../models/user');
 const Todo = require('../models/todo');
-const {userExtractor} = require('../middleware/auth'); // Middleware para extraer el usuario autenticado}
-const { res } = require('../app');
-
-// /todosRouter.use(userExtractor); // Aplicar el middleware para todas las rutas de este router
 
 todosRouter.get('/', async (request, response) => {
     const user = request.user;
@@ -30,10 +26,11 @@ todosRouter.post('/', async (request, response) => {
 
 todosRouter.delete('/:id', async (request, response) => {
     const user = request.user;
+    const todoIdDeleted = request.params.id;
 
-await Todo.findByIdAndDelete(request.params.id);
+await Todo.findByIdAndDelete(todoIdDeleted);
 
-user.todos = user.todos.filter(todo => todo.id !== request.params.id);
+user.todos = user.todos.filter(todoId => todoId.toString() !== todoIdDeleted);
 
 await user.save();
 return response.sendStatus(204);
