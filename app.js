@@ -11,10 +11,11 @@ const loginRouter = require('./controllers/login');
 const todosRouter = require('./controllers/todos');
 const logoutRouter = require('./controllers/logout');
 const { userExtractor } = require('./middleware/auth'); // Middleware para extraer el usuario autenticado
+const { MONGO_URI } = require('./config');
 
 (async() =>{
     try {
-        await mongoose.connect(process.env.MONGO_URI_TEST);
+        await mongoose.connect(MONGO_URI);
         console.log('Conecto a Mongo DB');
     } catch (error) {
         console.log(error);
