@@ -11,7 +11,7 @@ const loginRouter = require('./controllers/login');
 const todosRouter = require('./controllers/todos');
 const logoutRouter = require('./controllers/logout');
 const { userExtractor } = require('./middleware/auth'); // Middleware para extraer el usuario autenticado
-const { MONGO_URI } = require('./config');
+const { MONGO_URI } = require('./config'); // Importar la URI de conexión a MongoDB desde el archivo de configuración
 
 (async() =>{
     try {
