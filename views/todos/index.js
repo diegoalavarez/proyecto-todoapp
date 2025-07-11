@@ -8,6 +8,8 @@ const completedCountSpan = document.querySelector('.completed-count');
 const incompletedCountSpan = document.querySelector('.incompleted-count');
 
 
+
+
 const totalCount = () => {
 	const howMany = document.querySelector('ul').children.length; 
 	totalCountSpan.innerHTML = howMany;
@@ -46,7 +48,7 @@ form.addEventListener('submit', async e => {
 	invalidCheck.classList.add('hidden');
 
 	// Create list item
-	const { data } = await axios.post('/api/todos', { text: input.value });
+	const { data } = await axios.post('/api/todos', {text: input.value});
 	console.log(data);
 
 	const listItem = document.createElement('li');
@@ -109,15 +111,15 @@ ul.addEventListener('click', async e => {
 	}
 });
 
-(async() => {
+(async () => {
 	try {
 			const { data } = await axios.get('/api/todos', {
-		withCredentials: true
+				withCredentials: true
 	});
 
 data.forEach(todo => {
-		const listItem = document.createElement('li');
-		listItem.id = todo.id;
+	const listItem = document.createElement('li');
+	listItem.id = todo.id;
 	listItem.classList.add('flex', 'flex-row');
 	listItem.innerHTML = `
 		<div class="group grow flex flex-row justify-between">
@@ -148,7 +150,7 @@ data.forEach(todo => {
 		ul.append(listItem);
 });
 
-		todoCount();
+	todoCount();
 
 	} catch (error) {
 		window.location.pathname = '/login'

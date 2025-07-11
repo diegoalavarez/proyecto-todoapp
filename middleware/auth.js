@@ -3,22 +3,24 @@ const User = require('../models/user');
 
 
 
-const userExtractor = async (req, res, next) => {
-    const token = req.cookies.accessToken;
-    if (!token) {
-        return res.status(401).json({ error: 'Token faltante' });
-    }
+const userExtractor = async (request, response, next) => {
     try {
+        const token = request.cookies?.accessToken;
+        if (!token) {
+            return response.sendStatus(401).json({ error: 'Token faltante' });
+    }
         const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
         const user = await User.findById(decoded.id);
+        request.user = user;
+        
         if (!user) {
-            return res.status(401).json({ error: 'Usuario no encontrado' });
+            return response.sendStatus(401).json({ error: 'Usuario no encontrado' });
         }
-        req.user = user;
-        next();
+       
     } catch (error) {
-        return res.status(401).json({ error: 'Token inválido' });
+        return response.sendStatus(403).json({ error: 'Token inválido' });
     }
+    next();
 };
 
 

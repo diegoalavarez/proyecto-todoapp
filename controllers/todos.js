@@ -8,58 +8,47 @@ const { response } = require('../app');
 
 todosRouter.get('/', async (request, response) => {
     const user = request.user;
-    //console.log(request.user);
-    const todos = await Todo.find({ user: user.id })  
+    const todos = await Todo.find({ user: user.id });
     return response.status(200).json(todos);
 });
 
 todosRouter.post('/', async (request, response) => {
     const user = request.user;
     const { text } = request.body;
-    console.log(text);
-
-    if (!text) {
-        return response.status(400).json({ error: 'El texto es requerido' });
-    }
-
     const newTodo = new Todo({
         text,
         checked: false,
         user: user._id
     });
     const savedTodo = await newTodo.save();
-    user.todos.push(savedTodo._id);
+    user.todos = user.todos.concat(savedTodo._id);
     await user.save();
-
+    
     return response.status(201).json(savedTodo);
 });
 
 
-// return response.status(201).json(savedTodo);
+todosRouter.delete('/:id', async (request, response) => {
+    const user = request.user;
 
-// });
+await Todo.findByIdAndDelete(request.params.id);
 
-//- todosRouter.delete('/:id', async (request, response) => {
-//     const user = request.user;
+user.todos = user.todos.filter(todo => todo.id !== request.params.id);
 
-// await Todo.findByIdAndDelete(request.params.id);
+await user.save();
+return response.sendStatus(204);
 
-// user.todos = user.todos.filter(todo => todo.id !== request.params.id);
+});
 
-// await user.save();
-// return response.sendStatus(204);
+todosRouter.patch('/:id', async (request, response) => {
+  const user = request.user;
 
-// });
+const { checked } = request.body;
 
-// -todosRouter.patch('/:id', async (request, response) => {
-//     const user = request.user;
+await Todo.findByIdAndUpdate(request.params.id, { checked });
 
-// const { checked } = request.body;
+return response.sendStatus(200);
 
-// await Todo.findByIdAndUpdate(request.params.id, { checked });
-
-// return response.sendStatus(200);
-
-
+});
 
 module.exports = todosRouter;
