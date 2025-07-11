@@ -16,11 +16,11 @@ const userExtractor = async (request, response, next) => {
         if (!user) {
             return response.sendStatus(401).json({ error: 'Usuario no encontrado' });
         }
-       
+       next();
     } catch (error) {
         return response.sendStatus(403).json({ error: 'Token inválido' });
     }
-    next();
+    
 };
 
 
