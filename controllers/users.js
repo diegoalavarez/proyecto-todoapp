@@ -61,6 +61,8 @@ usersRouter.post('/', async (request, response) => {
 } catch {
 
     console.error('Error al registrar el usuario', error)
+
+     return res.status(500).json({ message: 'Error interno del servidor al crear el usuario.', error: error.message });
 }
 });
 
