@@ -4,7 +4,7 @@ logoutRouter.get('/', async (request, response) => {
     const cookies = request.cookies;
 // verificar si el usuario esta autenticado
     if (!cookies?.accessToken) {
-        return response.sendStatus(401).json({ error: 'No estás autenticado' });
+        return response.sendStatus(401);
     }
 
     // Clear the accessToken cookie
