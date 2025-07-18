@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId, // Almacena el ID del usuario que creó el todo
         ref: 'Todo' // Referencia al modelo Todo
         }]
-    });
+    })
 
 // Configura cómo se transforman los documentos al convertirlos a JSON
 userSchema.set('toJSON', {
@@ -22,7 +22,7 @@ userSchema.set('toJSON', {
         returnedObject.id = returnedObject._id.toString(); // Convierte el campo _id a un string y lo renombra a id
         delete returnedObject._id; // Elimina el campo _id que es generado por MongoDB
         delete returnedObject.__v; // Elimina el campo __v que es usado por Mongoose para el control de versiones
-        delete returnedObject.passwordHash; // No enviar el hash de la contraseña
+        // delete returnedObject.passwordHash; // No enviar el hash de la contraseña
     }
 });
 

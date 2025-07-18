@@ -14,9 +14,9 @@ usersRouter.post('/', async (request, response) => {
     }
 
     // Validación de email
-    const userExists = await User.findOne({ email }); // Busca si el usuario ya existe en la base de datos
+    const userExist = await User.findOne({ email }); // Busca si el usuario ya existe en la base de datos
     
-    if (userExists) {
+    if (userExist) {
         return response.status(400).json({error: 'El email ya está en uso' });
 
     }
@@ -28,7 +28,7 @@ usersRouter.post('/', async (request, response) => {
         name,
         email,
         passwordHash,
-    });
+    })
 
     const savedUser = await newUser.save(); // Guarda el nuevo usuario en la base de datos
     const token = jwt.sign({ id: savedUser.id }, process.env.ACCESS_TOKEN_SECRET, { 
@@ -41,8 +41,8 @@ usersRouter.post('/', async (request, response) => {
         port: 465, // Cambia el puerto si es necesario
         secure: true, // true for 465, false for other ports
         auth: {
-            user: process.env.EMAIL_USER, // Reemplaza con tu usuario de email
-            pass: process.env.EMAIL_PASS, // Reemplaza con tu contraseña de email
+        user: process.env.EMAIL_USER, // Reemplaza con tu usuario de email
+        pass: process.env.EMAIL_PASS, // Reemplaza con tu contraseña de email
     },
     });
 
@@ -61,11 +61,11 @@ usersRouter.post('/', async (request, response) => {
 // Ruta para verificar el usuario mediante un token
 usersRouter.patch('/:id/:token', async (request, response) => {
     try {
-    const token = request.params.token; // Obtiene el token de la URL
-    const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET); // Verifica el token
-    const id = decodedToken.id; // Obtiene el ID del usuario desde el token;
-    await User.findByIdAndUpdate(id, { verified: true });
-    return response.sendStatus(200);
+        const token = request.params.token; // Obtiene el token de la URL
+        const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET); // Verifica el token
+        const id = decodedToken.id; // Obtiene el ID del usuario desde el token;
+        await User.findByIdAndUpdate(id, { verified: true });
+        return response.sendStatus(200);
     } catch (error) {
 
         //Encontrar el email del usuario
@@ -83,8 +83,8 @@ usersRouter.patch('/:id/:token', async (request, response) => {
         port: 465, // Cambia el puerto si es necesario
         secure: true, // true for 465, false for other ports
         auth: {
-            user: process.env.EMAIL_USER, // Reemplaza con tu usuario de email
-            pass: process.env.EMAIL_PASS, // Reemplaza con tu contraseña de email
+        user: process.env.EMAIL_USER, // Reemplaza con tu usuario de email
+        pass: process.env.EMAIL_PASS, // Reemplaza con tu contraseña de email
     },
     });
 
