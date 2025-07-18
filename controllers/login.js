@@ -1,5 +1,6 @@
 const loginRouter = require('express').Router();
 const User = require('../models/user');
+const {response} = requiere("express")
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -13,7 +14,7 @@ loginRouter.post('/', async (request, response) => {
         return response.status(400).json({ error: 'Email o contraseña incorrectos' });
     }
 
-    if (!userExist.verified) {
+    if (!userExist.verified === false) {
         return response.status(400).json({ error: 'Email no verificado' });
     }
 
