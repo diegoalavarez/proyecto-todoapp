@@ -13,7 +13,6 @@ usersRouter.post('/', async (request, response) => {
         return response.status(400).json({error: 'Todos los campos son obligatorios' });
     }
 
-     try {
 
     // Validación de email
     const userExist = await User.findOne({ email }); // Busca si el usuario ya existe en la base de datos
@@ -58,12 +57,12 @@ usersRouter.post('/', async (request, response) => {
     });
     
     return response.status(201).json('Usuario creado. Por favor verifica tu correo');
-} catch {
+ 
 
     console.error('Error al registrar el usuario', error)
 
      return res.status(500).json({ message: 'Error interno del servidor al crear el usuario.', error: error.message });
-}
+
 });
 
 // Ruta para verificar el usuario mediante un token
