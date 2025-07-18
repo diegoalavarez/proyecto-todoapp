@@ -13,7 +13,7 @@ loginRouter.post('/', async (request, response) => {
         return response.status(400).json({ error: 'Email o contraseña incorrectos' });
     }
 
-    if (!userExist.verified === false) {
+    if (!userExist.verified.false) {
         return response.status(400).json({ error: 'Email no verificado' });
     }
 
