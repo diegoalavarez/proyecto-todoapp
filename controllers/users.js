@@ -6,6 +6,10 @@ const nodemailer = require('nodemailer'); // Importa nodemailer para enviar corr
 const {PAGE_URL} = require('../config'); // Importa la URL de la página desde la configuración
 
 // Ruta para registrar un nuevo usuario
+// Esta ruta recibe los datos del usuario (nombre, email y contraseña) y crea un nuevo usuario en la base de datos
+// Si el usuario ya existe, devuelve un error
+// Si el registro es exitoso, envía un correo electrónico de verificación al usuario
+// También genera un token de acceso que se puede usar para verificar el usuario más tarde
 usersRouter.post('/', async (request, response) => {
     const { name, email, password } = request.body;
 
