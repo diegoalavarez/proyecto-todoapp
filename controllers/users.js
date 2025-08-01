@@ -13,10 +13,12 @@ usersRouter.post('/', async (request, response) => {
         return response.status(400).json({error: 'Todos los campos son obligatorios' });
     }
 
+
     // Validación de email
-    const userExists = await User.findOne({ email }); // Busca si el usuario ya existe en la base de datos
-    
-    if (userExists) {
+    const userExist = await User.findOne({ email }); // Busca si el usuario ya existe en la base de datos
+    //find one es un metodo para buscar en la base de datos.
+
+    if (userExist) {
         return response.status(400).json({error: 'El email ya está en uso' });
 
     }
@@ -28,7 +30,7 @@ usersRouter.post('/', async (request, response) => {
         name,
         email,
         passwordHash,
-    });
+    })
 
     const savedUser = await newUser.save(); // Guarda el nuevo usuario en la base de datos
     const token = jwt.sign({ id: savedUser.id }, process.env.ACCESS_TOKEN_SECRET, { 
@@ -41,8 +43,8 @@ usersRouter.post('/', async (request, response) => {
         port: 465, // Cambia el puerto si es necesario
         secure: true, // true for 465, false for other ports
         auth: {
-            user: process.env.EMAIL_USER, // Reemplaza con tu usuario de email
-            pass: process.env.EMAIL_PASS, // Reemplaza con tu contraseña de email
+        user: process.env.EMAIL_USER, // Reemplaza con tu usuario de email
+        pass: process.env.EMAIL_PASS, // Reemplaza con tu contraseña de email
     },
     });
 
@@ -55,6 +57,11 @@ usersRouter.post('/', async (request, response) => {
     });
     
     return response.status(201).json('Usuario creado. Por favor verifica tu correo');
+ 
+
+    console.error('Error al registrar el usuario', error)
+
+     return res.status(500).json({ message: 'Error interno del servidor al crear el usuario.', error: error.message });
 
 });
 
@@ -66,9 +73,7 @@ usersRouter.patch('/:id/:token', async (request, response) => {
     const id = decodedToken.id; // Obtiene el ID del usuario desde el token;
     await User.findByIdAndUpdate(id, { verified: true });
     return response.sendStatus(200);
-    } 
-    
-    catch (error) {
+    } catch (error) {
 
         //Encontrar el email del usuario
         const id = request.params.id;
@@ -85,8 +90,8 @@ usersRouter.patch('/:id/:token', async (request, response) => {
         port: 465, // Cambia el puerto si es necesario
         secure: true, // true for 465, false for other ports
         auth: {
-            user: process.env.EMAIL_USER, // Reemplaza con tu usuario de email
-            pass: process.env.EMAIL_PASS, // Reemplaza con tu contraseña de email
+        user: process.env.EMAIL_USER, // Reemplaza con tu usuario de email
+        pass: process.env.EMAIL_PASS, // Reemplaza con tu contraseña de email
     },
     });
 
