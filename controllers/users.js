@@ -37,11 +37,11 @@ usersRouter.post('/', async (request, response) => {
     })
 
     const savedUser = await newUser.save(); // Guarda el nuevo usuario en la base de datos
-    const token = jwt.sign({ id: savedUser.id }, process.env.ACCESS_TOKEN_SECRET, { 
+    const token = jwt.sign({ id: savedUser.id }, process.env.ACCESS_TOKEN_SECRET, { // Firmar el token con el ID del usuario
         expiresIn: '1d' // Expira en 1 día
     });
 
-// Create a test account or replace with real credentials.
+// Configuración del transportador de nodemailer para enviar correos electrónicos
     const transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com', // Cambia el host si es necesario 
         port: 465, // Cambia el puerto si es necesario
