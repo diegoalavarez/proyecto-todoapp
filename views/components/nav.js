@@ -47,7 +47,7 @@ const createNavLogin = () => {
 
                             <!-- version mobile -->
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 md:hidden text-white cursor-pointer p-2 rounded-lg">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /> 
                             </svg>
                             <div class="bg-slate-900/80 fixed top-16 right-0 left-0 bottom-0 justify-center items-center flex-col gap-4 hidden">
                                 <a href="/signup" class="transition ease-in-out text-white font-bold bg-indigo-500 hover:bg-indigo-800 py-2 px-4 rounded-lg">Registro</a>
@@ -66,7 +66,7 @@ const createNavTodos = () => {
 
                             <!-- version mobile -->
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 md:hidden text-white cursor-pointer p-2 rounded-lg">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /> 
                             </svg>
                             <div class="bg-slate-900/80 fixed top-16 right-0 left-0 bottom-0 justify-center items-center flex-col gap-4 hidden">
                                 <button id="close-btn" class="transition ease-in-out text-white font-bold bg-indigo-500 hover:bg-indigo-800 py-2 px-4 rounded-lg">Cerrar Sesion</button>

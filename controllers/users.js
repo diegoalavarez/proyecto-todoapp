@@ -66,7 +66,9 @@ usersRouter.patch('/:id/:token', async (request, response) => {
     const id = decodedToken.id; // Obtiene el ID del usuario desde el token;
     await User.findByIdAndUpdate(id, { verified: true });
     return response.sendStatus(200);
-    } catch (error) {
+    } 
+    
+    catch (error) {
 
         //Encontrar el email del usuario
         const id = request.params.id;
